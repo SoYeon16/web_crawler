@@ -1,0 +1,57 @@
+conn = pymysql.connect(host = "203.252.196.68",
+                       user = 'db1611164', passwd = 'stat1234', db = 'sql1611164')
+# your access: user='dbXXXXXXX', passwd='stat1234', db='sqlXXXXXXX' --- XXXXXXX is your student code
+cur = conn.cursor()
+
+myquery1 = """
+CREATE TABLE Paris_MetaData_v1 (
+    FLIGHT_ID BIGINT(7) NOT NULL AUTO_INCREMENT,
+    FLIGHT_CODE1 VARCHAR(10), DEP_DATE1 VARCHAR(10), DEP_TIME1 VARCHAR(5), ARR_DATE1 VARCHAR(10), ARR_TIME1 VARCHAR(5),
+    FLIGHT_CODE2 VARCHAR(10), DEP_DATE2 VARCHAR(10), DEP_TIME2 VARCHAR(5), ARR_DATE2 VARCHAR(10), ARR_TIME2 VARCHAR(5),
+    PRIMARY KEY(FLIGHT_ID) )
+    CHARSET=utf8mb4 ;
+"""
+
+cur.execute(myquery1)
+
+myquery1 = """
+CREATE TABLE Paris_Price_v1 (
+    PRICE_ID BIGINT(7) NOT NULL AUTO_INCREMENT,
+    FLIGHT_ID BIGINT(7),
+    TIME_OF_CRAWL DATETIME NOT NULL DEFAULT NOW(),
+    PRICE VARCHAR(20),
+    PRIMARY KEY(PRICE_ID),
+    FOREIGN KEY(FLIGHT_ID) REFERENCES Paris_MetaData_v1(FLIGHT_ID) )
+    CHARSET=utf8mb4 ;
+"""
+
+cur.execute(myquery1)
+
+myquery1 = """
+CREATE TABLE Shanghai_MetaData_v1 (
+    FLIGHT_ID BIGINT(7) NOT NULL AUTO_INCREMENT,
+    FLIGHT_CODE1 VARCHAR(10), DEP_DATE1 VARCHAR(10), DEP_TIME1 VARCHAR(5), ARR_DATE1 VARCHAR(10), ARR_TIME1 VARCHAR(5),
+    FLIGHT_CODE2 VARCHAR(10), DEP_DATE2 VARCHAR(10), DEP_TIME2 VARCHAR(5), ARR_DATE2 VARCHAR(10), ARR_TIME2 VARCHAR(5),
+    PRIMARY KEY(FLIGHT_ID) )
+    CHARSET=utf8mb4 ;
+"""
+
+cur.execute(myquery1)
+
+myquery1 = """
+CREATE TABLE Shanghai_Price_v1 (
+    PRICE_ID BIGINT(7) NOT NULL AUTO_INCREMENT,
+    FLIGHT_ID BIGINT(7),
+    TIME_OF_CRAWL DATETIME NOT NULL DEFAULT NOW(),
+    PRICE VARCHAR(20),
+    PRIMARY KEY(PRICE_ID),
+    FOREIGN KEY(FLIGHT_ID) REFERENCES Shanghai_MetaData_v1(FLIGHT_ID) )
+    CHARSET=utf8mb4 ;
+"""
+
+cur.execute(myquery1)
+
+conn.commit()
+
+cur.close()
+conn.close()
